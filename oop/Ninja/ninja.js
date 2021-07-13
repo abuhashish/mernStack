@@ -1,19 +1,19 @@
 class Ninja{
-    constructor(name){
+    constructor(name,health=0,speed=3,str=3){
         this.name=name;
-        this.health=0;
-        this.speed=3;
-        this.str=3;
+        this.health=health;
+        this.speed=speed;
+        this.str=str;
     }
 
     sayName(){
         console.log(this.name);
     }
     showStats(){
-        console.log("health is "+this.health+"/n speed is "+this.speed+"/n str is"+this.str);
+        console.log("health is "+this.health+"\n speed is "+this.speed+"\n str is"+this.str);
     }
-    drinkSake(health){
-        return health+=10;
+    drinkSake(){
+        this.health+=10;
     }
 }
 const x = new Ninja("amro");
@@ -27,10 +27,9 @@ class sensi extends Ninja{
         this.wisdom=10;
     }
     speakWisdom(){
-        this.health=this.drinkSake(this.health);
+        super.drinkSake();
         console.log("message of wisdeom");
     }
 }
 const g=new sensi("amro");
 g.speakWisdom();
-console.log(g.health)
