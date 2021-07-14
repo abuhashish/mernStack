@@ -10,7 +10,7 @@ class TestComp extends React.Component {
       
         return(
             <div>
-           
+           <h1>my name is {this.props.firstName} {this.props.lastName}</h1>
             <p>my age is {this.state.age}</p>
             <button onClick={ () => {this.setState({ age:this.state.age+=1 }) }}>add</button>
             </div>
