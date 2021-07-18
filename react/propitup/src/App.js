@@ -6,11 +6,12 @@ import UserForm from './components/userForm';
 import MovieForm from './components/MovieForm';
 import ListWithAddItem from './components/test';
 import Form from './components/Form';
+import Counter from './components/testme'
 function App() {
   return (
     <div className="App">
         
-        <Form/>
+        <PersonCard firstName={"amro"} lastName={"abuhashish"} age={5}/>
         
     </div>
   );
