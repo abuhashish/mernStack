@@ -1,18 +1,27 @@
-import React, { useState }from 'react'
+import React, { useState } from 'react'
+import {useEffect} from 'react'
 
 const Show = (props) => {
     const[items,setItems]=useState(props.list)
-    console.log(items)
+    const deleteTask=i=>{
+        let array=items;
+        console.log(items)
+        array.splice(i,i)
+        console.log(array)
+        setItems(array)
+        console.log("hey")
+        
+    }
+    useEffect(() => {
+        setItems(props.list);
+    }, [props.list])
     return (
         
         <div>
             
-            {props.list.map((item,i)=>(<h1 key={i}>{item.task}</h1>))}
-            <form >
-            
-            <button type="submit">deltte</button>
+            {items.map((item,i)=>(<h1 key={i}>{item.task} <button onClick={e=>deleteTask(i)}>Delete</button></h1>))}    
             <h1>________________________________</h1>
-            </form> 
+            
         </div>
     )
 }

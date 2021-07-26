@@ -14,7 +14,6 @@ function App() {
     const test={task:x,isChecked:false}
     
     setList([...List, test]);
-    console.log(List)
   }
 
 
