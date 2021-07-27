@@ -1,0 +1,380 @@
+ ({name: "Amro", home_state: "ramallah", lucky_number: 7, birthday: {month: 5, day: 10, year: 1998}})
+
+ ({name: "yara", home_state: "ramallah", lucky_number: 11, birthday: {month: 7, day: 7, year: 200}})
+
+ ({name: "ahmad", home_state: "ramallah", lucky_number: 5, birthday: {month: 1, day: 11, year: 1967}})
+
+ ({name: "faten", home_state: "jordan", lucky_number: 10, birthday: {month: 12, day: 12, year: 1976}})
+
+ ({name: "kenan", home_state: "ramallah", lucky_number: 9, birthday: {month: 12, day: 5, year: 63}})
+
+
+                             batchSize,
+                             options || this.getQueryOptions());
+
+    {
+        const session = this.getDB().getSession();
+
+        const readPreference = session._getSessionAwareClient().getReadPreference(session);
+        if (readPreference !== null) {
+            cursor.readPref(readPreference.mode, readPreference.tags);
+        }
+
+        const client = session._getSessionAwareClient();
+        const readConcern = client.getReadConcern(session);
+        if (readConcern !== null &&
+            client.canUseReadConcern(session, cursor._convertToCommand(true))) {
+            cursor.readConcern(readConcern.level);
+        }
+    }
+
+    return cursor;
+}
+> db.students.find()
+>
+> db.students.find().pretty()
+> db
+my_first_db
+> db.students.insert({name: "Amro", home_state: "ramallah", lucky_number: 7, birthday: {month: 5, day: 10, year: 1998}})
+WriteResult({ "nInserted" : 1 })
+> db.students.insert ({name: "yara", home_state: "ramallah", lucky_number: 11, birthday: {month: 7, day: 7, year: 200}})
+WriteResult({ "nInserted" : 1 })
+> db.insert ({name: "ahmad", home_state: "ramallah", lucky_number: 5, birthday: {month: 1, day: 11, year: 1967}})
+uncaught exception: TypeError: db.insert is not a function :
+@(shell):1:1
+> db.insert({name: "ahmad", home_state: "ramallah", lucky_number: 5, birthday: {month: 1, day: 11, year: 1967}})
+uncaught exception: TypeError: db.insert is not a function :
+@(shell):1:1
+> db.students.show
+my_first_db.students.show
+> db.students.find()
+{ "_id" : ObjectId("60febbc91373dc2623915391"), "name" : "Amro", "home_state" : "ramallah", "lucky_number" : 7, "birthday" : { "month" : 5, "day" : 10, "year" : 1998 } }
+{ "_id" : ObjectId("60febbd61373dc2623915392"), "name" : "yara", "home_state" : "ramallah", "lucky_number" : 11, "birthday" : { "month" : 7, "day" : 7, "year" : 200 } }
+> db.students.insert({name: "ahmad", home_state: "ramallah", lucky_number: 5, birthday: {month: 1, day: 11, year: 1967}})
+WriteResult({ "nInserted" : 1 })
+>
+> db.insert({name: "faten", home_state: "jordan", lucky_number: 10, birthday: {month: 12, day: 12, year: 1976}})
+uncaught exception: TypeError: db.insert is not a function :
+@(shell):1:1
+> db.students.insert({name: "faten", home_state: "jordan", lucky_number: 10, birthday: {month: 12, day: 12, year: 1976}})
+WriteResult({ "nInserted" : 1 })
+> db.students.insert({name: "kenan", home_state: "ramallah", lucky_number: 9, birthday: {month: 12, day: 5, year: 63}})
+WriteResult({ "nInserted" : 1 })
+> db.students.find(city:"ramallah").pretty()
+uncaught exception: SyntaxError: missing ) after argument list :
+@(shell):1:21
+> db.students.insert({name: "kenan", home_state: "ramallah", lucky_number: 9, birthday: {month: 12, day: 5, year
+...
+...
+>
+>
+> db.students.find({city:"ramallah"}).pretty()
+> db.students.find({home_state:"ramallah"}).pretty()
+{
+        "_id" : ObjectId("60febbc91373dc2623915391"),
+        "name" : "Amro",
+        "home_state" : "ramallah",
+        "lucky_number" : 7,
+        "birthday" : {
+                "month" : 5,
+                "day" : 10,
+                "year" : 1998
+        }
+}
+{
+        "_id" : ObjectId("60febbd61373dc2623915392"),
+        "name" : "yara",
+        "home_state" : "ramallah",
+        "lucky_number" : 11,
+        "birthday" : {
+                "month" : 7,
+                "day" : 7,
+                "year" : 200
+        }
+}
+{
+        "_id" : ObjectId("60febc171373dc2623915393"),
+        "name" : "ahmad",
+        "home_state" : "ramallah",
+        "lucky_number" : 5,
+        "birthday" : {
+                "month" : 1,
+                "day" : 11,
+                "year" : 1967
+        }
+}
+{
+        "_id" : ObjectId("60febc311373dc2623915395"),
+        "name" : "kenan",
+        "home_state" : "ramallah",
+        "lucky_number" : 9,
+        "birthday" : {
+                "month" : 12,
+                "day" : 5,
+                "year" : 63
+        }
+}
+> db.students.find({lucky_number:{$gt:10}}).pretty()
+{
+        "_id" : ObjectId("60febbd61373dc2623915392"),
+        "name" : "yara",
+        "home_state" : "ramallah",
+        "lucky_number" : 11,
+        "birthday" : {
+                "month" : 7,
+                "day" : 7,
+                "year" : 200
+        }
+}
+> db.students.find({lucky_number:{$gte:1},{$lte:9}}).pretty()
+uncaught exception: SyntaxError: expected property name, got '{' :
+@(shell):1:40
+> db.students.find({lucky_number:{$gte:1,$lte:9}}).pretty()
+{
+        "_id" : ObjectId("60febbc91373dc2623915391"),
+        "name" : "Amro",
+        "home_state" : "ramallah",
+        "lucky_number" : 7,
+        "birthday" : {
+                "month" : 5,
+                "day" : 10,
+                "year" : 1998
+        }
+}
+{
+        "_id" : ObjectId("60febc171373dc2623915393"),
+        "name" : "ahmad",
+        "home_state" : "ramallah",
+        "lucky_number" : 5,
+        "birthday" : {
+                "month" : 1,
+                "day" : 11,
+                "year" : 1967
+        }
+}
+{
+        "_id" : ObjectId("60febc311373dc2623915395"),
+        "name" : "kenan",
+        "home_state" : "ramallah",
+        "lucky_number" : 9,
+        "birthday" : {
+                "month" : 12,
+                "day" : 5,
+                "year" : 63
+        }
+}
+> db.students
+my_first_db.students
+> db.students.show
+my_first_db.students.show
+> db.students.update({name:"amro"},{array:["one","two"]})
+WriteResult({ "nMatched" : 0, "nUpserted" : 0, "nModified" : 0 })
+> db.students.update({name:"amro"},{$push:{array:"three"}})
+WriteResult({ "nMatched" : 0, "nUpserted" : 0, "nModified" : 0 })
+> db.studens.find({name:"amro"})
+> db.studens.find({name="amro"})
+uncaught exception: SyntaxError: missing : after property id :
+@(shell):1:21
+> db.students.update({name:"Amro"},{array:["one","two"]})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.students.update({name:"Amro"},{$push:{array:"three"}})
+WriteResult({ "nMatched" : 0, "nUpserted" : 0, "nModified" : 0 })
+> db.studens.find({name="amro"})
+uncaught exception: SyntaxError: missing : after property id :
+@(shell):1:21
+> db.studens.find({name="Amro"})
+uncaught exception: SyntaxError: missing : after property id :
+@(shell):1:21
+> db.studens.find({name:"Amro"})
+> db.students.show().pretty()
+uncaught exception: TypeError: db.students.show is not a function :
+@(shell):1:1
+> db.students.show().pretty()
+uncaught exception: TypeError: db.students.show is not a function :
+@(shell):1:1
+> db.students.find().pretty()
+{
+        "_id" : ObjectId("60febbc91373dc2623915391"),
+        "array" : [
+                "one",
+                "two"
+        ]
+}
+{
+        "_id" : ObjectId("60febbd61373dc2623915392"),
+        "name" : "yara",
+        "home_state" : "ramallah",
+        "lucky_number" : 11,
+        "birthday" : {
+                "month" : 7,
+                "day" : 7,
+                "year" : 200
+        }
+}
+{
+        "_id" : ObjectId("60febc171373dc2623915393"),
+        "name" : "ahmad",
+        "home_state" : "ramallah",
+        "lucky_number" : 5,
+        "birthday" : {
+                "month" : 1,
+                "day" : 11,
+                "year" : 1967
+        }
+}
+{
+        "_id" : ObjectId("60febc251373dc2623915394"),
+        "name" : "faten",
+        "home_state" : "jordan",
+        "lucky_number" : 10,
+        "birthday" : {
+                "month" : 12,
+                "day" : 12,
+                "year" : 1976
+        }
+}
+{
+        "_id" : ObjectId("60febc311373dc2623915395"),
+        "name" : "kenan",
+        "home_state" : "ramallah",
+        "lucky_number" : 9,
+        "birthday" : {
+                "month" : 12,
+                "day" : 5,
+                "year" : 63
+        }
+}
+> db.students.find({name:amro},{$push:{array:"1"}})
+uncaught exception: ReferenceError: amro is not defined :
+@(shell):1:19
+> db.students.find({name:"amro"},{$push:{array:"1"}})
+Error: error: {
+        "ok" : 0,
+        "errmsg" : "FieldPath field names may not start with '$'. Consider using $getField or $setField.",
+        "code" : 16410,
+        "codeName" : "Location16410"
+}
+> db.students.update({name:"amro"},{$push:{array:"1"}})
+WriteResult({ "nMatched" : 0, "nUpserted" : 0, "nModified" : 0 })
+> db.students.update({name:"Amro"},{$push:{array:"1"}})
+WriteResult({ "nMatched" : 0, "nUpserted" : 0, "nModified" : 0 })
+> db.students.update({_id:ObjectId("60febbc91373dc2623915391")},{$push:{array:"1"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.students.find().pretty()
+{
+        "_id" : ObjectId("60febbc91373dc2623915391"),
+        "array" : [
+                "one",
+                "two",
+                "1"
+        ]
+}
+{
+        "_id" : ObjectId("60febbd61373dc2623915392"),
+        "name" : "yara",
+        "home_state" : "ramallah",
+        "lucky_number" : 11,
+        "birthday" : {
+                "month" : 7,
+                "day" : 7,
+                "year" : 200
+        }
+}
+{
+        "_id" : ObjectId("60febc171373dc2623915393"),
+        "name" : "ahmad",
+        "home_state" : "ramallah",
+        "lucky_number" : 5,
+        "birthday" : {
+                "month" : 1,
+                "day" : 11,
+                "year" : 1967
+        }
+}
+{
+        "_id" : ObjectId("60febc251373dc2623915394"),
+        "name" : "faten",
+        "home_state" : "jordan",
+        "lucky_number" : 10,
+        "birthday" : {
+                "month" : 12,
+                "day" : 12,
+                "year" : 1976
+        }
+}
+{
+        "_id" : ObjectId("60febc311373dc2623915395"),
+        "name" : "kenan",
+        "home_state" : "ramallah",
+        "lucky_number" : 9,
+        "birthday" : {
+                "month" : 12,
+                "day" : 5,
+                "year" : 63
+        }
+}
+> db.students.update({home_state:"ramallah"},{$inc:{lucky_number:1}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.students.find().pretty()
+{
+        "_id" : ObjectId("60febbc91373dc2623915391"),
+        "array" : [
+                "one",
+                "two",
+                "1"
+        ]
+}
+{
+        "_id" : ObjectId("60febbd61373dc2623915392"),
+        "name" : "yara",
+        "home_state" : "ramallah",
+        "lucky_number" : 12,
+        "birthday" : {
+                "month" : 7,
+                "day" : 7,
+                "year" : 200
+        }
+}
+{
+        "_id" : ObjectId("60febc171373dc2623915393"),
+        "name" : "ahmad",
+        "home_state" : "ramallah",
+        "lucky_number" : 5,
+        "birthday" : {
+                "month" : 1,
+                "day" : 11,
+                "year" : 1967
+        }
+}
+{
+        "_id" : ObjectId("60febc251373dc2623915394"),
+        "name" : "faten",
+        "home_state" : "jordan",
+        "lucky_number" : 10,
+        "birthday" : {
+                "month" : 12,
+                "day" : 12,
+                "year" : 1976
+        }
+}
+{
+        "_id" : ObjectId("60febc311373dc2623915395"),
+        "name" : "kenan",
+        "home_state" : "ramallah",
+        "lucky_number" : 9,
+        "birthday" : {
+                "month" : 12,
+                "day" : 5,
+                "year" : 63
+        }
+}
+>
+
+
+
+
+
+
+
+
+

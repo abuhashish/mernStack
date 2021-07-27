@@ -13,6 +13,7 @@ const Show = (props) => {
         <h1>Name:{info.name}</h1>
         <h3>Mass:{info.mass}</h3>
         <h3>Height:{info.height}</h3>
+        <h3>we can fix it hehe</h3>
         </div>
     )
 }
