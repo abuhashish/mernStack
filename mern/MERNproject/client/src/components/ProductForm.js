@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-export default () => {
+export default (props) => {
     //keep track of what is being typed via useState hook
     const [Title, setTitle] = useState(""); 
     const [Desc, setDesc] = useState("");
@@ -16,6 +16,7 @@ export default () => {
             Desc
         })
             .then(res=>console.log(res))
+            .then(props.loaded(props.loaded+1))
             .catch(err=>console.log(err))
     }
     //onChange to update firstName and lastName
