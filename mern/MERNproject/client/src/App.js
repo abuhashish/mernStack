@@ -2,7 +2,7 @@ import React from 'react';
 import { Router } from '@reach/router';
 import Main from './views/Main';
 import Detail from './components/Detail';
-import Update from './components/Update';
+import Update from './views/Update';
 function App() {
   return (
     <div className="App">

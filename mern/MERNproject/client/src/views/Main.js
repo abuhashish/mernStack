@@ -10,12 +10,19 @@ export default () => {
         axios.get('http://localhost:8000/api/products')
             .then(res=>{
                 setPeople(res.data);
-                
             });
     },[loaded])
+
+    const onSubmitHandler = product => {
+        axios.post('http://localhost:8000/api/product', product)
+            .then(setLoaded(loaded+1))
+            .catch(err=>console.log(err))
+    }
     return (
         <div>
-           <ProductForm loaded={setLoaded}/>
+           <ProductForm loaded={setLoaded} onsubmit={onSubmitHandler} initialTitle=""
+          intialDesc=""
+          initialPrice=""/>
            <Productlist products={people}/>
         </div>
     )
